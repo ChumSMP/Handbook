@@ -1,0 +1,4 @@
+name: PlayerHandbook
+version: '1'
+main: org.mellurboo.playerHandbook.PlayerHandbook
+api-version: '1.21'
