@@ -6,7 +6,7 @@
 
     <groupId>org.mellurboo</groupId>
     <artifactId>Handbook</artifactId>
-    <version>1</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Handbook</name>
@@ -46,6 +46,12 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.yaml</include>
+                </includes>
             </resource>
         </resources>
     </build>

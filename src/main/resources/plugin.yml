@@ -1,4 +1,13 @@
-name: PlayerHandbook
-version: '1'
-main: org.mellurboo.playerHandbook.PlayerHandbook
+name: Handbook
+version: '1.0-SNAPSHOT'
+main: org.mellurboo.handbook.Handbook
 api-version: '1.21'
+
+commands:
+  handbook:
+    description: Open the handbook for your viewing pleasure
+    usage: /handbook [give]
+
+permissions:
+  handbook.admin:
+    default: false
