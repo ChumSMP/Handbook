@@ -1,0 +1,19 @@
+#
+# Myles "Mellurboo" Wilson 2024
+#
+
+handbook:
+  title: "BOOK TITLE"
+  author: "BOOK AUTHOR"
+  pages:
+    - "Support me on Ko-Fi https://ko-fi.com/mellurboo."
+    - "Page 2"
+    - "Page 3"
+
+# STRINGS (ENGLISH)
+NOT_A_PLAYER: "You must be a player to use this command!"
+BAD_PERMISSIONS: "You don't have permission to give handbooks!"
+PLAYER_NOT_ONLINE: "That player is not online."
+DUPLICATE_HANDBOOKS: "You already have a handbook!"
+HANDBOOK_GRANTED: "You have given a handbook to "
+HANDBOOK_RECIEVED: "A handbook has been added to your inventory."
