@@ -1,5 +1,6 @@
 package org.mellurboo.handbook.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -10,11 +11,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mellurboo.handbook.Handbook;
 
 import java.util.List;
 
-public class openHandbook implements CommandExecutor {
+public class handbook implements CommandExecutor {
 
     private ItemStack book;
     private FileConfiguration config;
@@ -22,7 +22,7 @@ public class openHandbook implements CommandExecutor {
     private final JavaPlugin plugin;
 
     /// Initialise this class
-    public openHandbook(Handbook plugin) {
+    public handbook(org.mellurboo.handbook.Handbook plugin) {
         this.plugin = plugin;
         writeBook();
     }
@@ -31,29 +31,29 @@ public class openHandbook implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("handbook")) {
-            if (sender instanceof Player){
-                Player player = (Player) sender;
-
-                if (args.length > 0 && args[0].equalsIgnoreCase("give")) {
-                    if (!player.hasPermission("handbook.admin")) {
-                        player.sendMessage(ChatColor.RED + plugin.getConfig().getString("NOT_A_PLAYER"));
-                        return true;
-                    }
-
-                    if (args.length > 1) {
-                        Player target = plugin.getServer().getPlayer(args[1]);
-                        if (target != null) {
-                            giveBook(target, player);
-                        } else {
-                            player.sendMessage(ChatColor.RED + plugin.getConfig().getString("PLAYER_NOT_ONLINE"));
-                        }
-                    } else {
-                        giveBook(player, player);
+            if (sender instanceof Player || args[0].equalsIgnoreCase("reload")) {
+                if (args.length > 0) {
+                    switch (args[0]){
+                        case "give":
+                            if (args.length == 1) {giveBook((Player) sender, sender); break;}
+                            Player recipient = Bukkit.getPlayer(args[1]);
+                            if (recipient != null) {
+                                giveBook(recipient, sender);
+                            }else {
+                                sender.sendMessage(ChatColor.RED + plugin.getConfig().getString("PLAYER_NOT_ONLINE"));
+                            }
+                            break;
+                        case "reload":
+                            if (sender.hasPermission("handbook.admin")) plugin.reloadConfig(); else
+                                sender.sendMessage(ChatColor.RED + plugin.getConfig().getString("NO_PERMISSION"));
+                            break;
+                        default:
+                            break;
                     }
                     return true;
                 }
 
-                player.openBook(book);
+                ((Player) sender).openBook(book);
                 return true;
             }else {
                 sender.sendMessage(ChatColor.RED + plugin.getConfig().getString("NOT_A_PLAYER"));
@@ -68,8 +68,8 @@ public class openHandbook implements CommandExecutor {
     /// that earlier so it's fine.
     private void giveBook(Player recipient, CommandSender sender) {
         // Check if the player already has the handbook
-        if (recipient.getInventory().contains(book)) {
-            recipient.sendMessage(ChatColor.RED + plugin.getConfig().getString("DUPLICATE_HANDBOOKS!"));
+        if (!sender.hasPermission("handbook.admin")) {
+            sender.sendMessage(ChatColor.RED + plugin.getConfig().getString("BAD_PERMISSIONS"));
             return;
         }
 
@@ -91,7 +91,7 @@ public class openHandbook implements CommandExecutor {
         FileConfiguration config = plugin.getConfig();
         List<String> pages = config.getStringList("handbook.pages");
 
-        if (pages == null || pages.isEmpty()) {
+        if (pages.isEmpty()) {
             plugin.getLogger().severe("pages are not defined in config.yml!");
             return;
         }

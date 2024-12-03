@@ -1,17 +1,22 @@
 #
 # Myles "Mellurboo" Wilson 2024
 #
+# You can edit this file to change how the plugin behaves
+# if you need help contact me on Discord @mellurboo
+#
 
 handbook:
   title: "BOOK TITLE"
   author: "BOOK AUTHOR"
   pages:
-    - "Support me on Ko-Fi https://ko-fi.com/mellurboo."
+    - "Page 1"
     - "Page 2"
     - "Page 3"
+#    - "you can add more pages by doing a - and then your content with quotes as seen above"
 
 # STRINGS (ENGLISH)
 NOT_A_PLAYER: "You must be a player to use this command!"
+BAD_COMMAND: "this is not a valid command!"
 BAD_PERMISSIONS: "You don't have permission to give handbooks!"
 PLAYER_NOT_ONLINE: "That player is not online."
 DUPLICATE_HANDBOOKS: "You already have a handbook!"
